@@ -24,6 +24,7 @@
     ],
     "rules": {
       "prettier/prettier": "error",
+      "camelcase": "off",
       "import/extensions": [
         "error",
         "ignorePackages",
@@ -35,7 +36,7 @@
     "settings": {
       "import/resolver": {
         "typescript": {
-  
+
         }
       }
     }
