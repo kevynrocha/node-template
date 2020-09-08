@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import User from '../models/User';
 import authConfig from '../config/auth';
+import UserRepository from '../repositories/UserRepository';
 
 const store = async (req: Request, res: Response): Promise<Response> => {
-  const { password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne();
+    const user = await UserRepository.findOneByEmail(email);
 
     if (!user) {
       throw new Error('Email/senha inválidos');
