@@ -38,6 +38,4 @@ const UserModel = connection.define<UserInstance>('users', {
   },
 });
 
-connection.sync({ force: true });
-
 export default UserModel;
