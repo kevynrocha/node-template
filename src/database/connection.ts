@@ -1,15 +1,7 @@
 import { Sequelize } from 'sequelize';
+import config from '../config/db';
 
-const connection = new Sequelize(
-  'postgres://kipbqlix:QG6F5zzN0ti_iUY6XDujpJwf1D21mNqn@tuffi.db.elephantsql.com:5432/kipbqlix',
-  {
-    define: {
-      underscored: true,
-      timestamps: true,
-      updatedAt: 'updated_at',
-      createdAt: 'created_at',
-    },
-  },
-);
-// ''
+const db_url = String(process.env.DB_URL);
+const connection = new Sequelize(db_url, config.db);
+
 export default connection;
