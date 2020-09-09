@@ -1,6 +1,6 @@
 import '@config/env';
-import express, { Request, Response, NextFunction } from 'express';
-import logger from '@config/logger';
+import express from 'express';
+import logger from './logger';
 import routes from './routes';
 
 const port = process.env.PORT || 3333;
