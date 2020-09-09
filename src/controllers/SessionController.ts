@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import authConfig from '../config/auth';
-import UserRepository from '../repositories/UserRepository';
+import UserRepository from '@repositories/UserRepository';
+import authConfig from '@config/auth';
 
 const store = async (req: Request, res: Response): Promise<Response> => {
   const { email, password } = req.body;

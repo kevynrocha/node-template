@@ -1,4 +1,4 @@
-import User, { UserAttributes } from '../models/User';
+import User, { UserAttributes } from '@models/User';
 import connection from '../database/connection';
 
 interface Request {

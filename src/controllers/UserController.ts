@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { hash } from 'bcryptjs';
-import UserRepository from '../repositories/UserRepository';
+import UserRepository from '@repositories/UserRepository';
 
 const store = async (req: Request, res: Response): Promise<Response> => {
   const { name, email, password } = req.body;

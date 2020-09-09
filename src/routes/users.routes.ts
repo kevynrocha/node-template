@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // import verifyAuthentication from '../middlewares/verifyAuthentication';
-import UserController from '../controllers/UserController';
-import { validate } from '../middlewares/validateRequest';
+import UserController from '@controllers/UserController';
+import { validate } from '../middlewares/validateRequestErros';
 import {
   showAndUpdateValidationRules,
   storeValidationRules,
