@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { hash } from 'bcryptjs';
 import UserRepository from '@repositories/UserRepository';
+import AppError from 'src/errors/AppError';
+import logger from 'src/logger';
 
 const store = async (req: Request, res: Response): Promise<Response> => {
   const { name, email, password } = req.body;
@@ -9,7 +11,7 @@ const store = async (req: Request, res: Response): Promise<Response> => {
     const checkUserExists = await UserRepository.findOneByEmail(email);
 
     if (checkUserExists) {
-      throw new Error('Email já existe');
+      throw AppError('Email já existe', 401);
     }
 
     const hashedPassword = await hash(password, 8);
@@ -22,7 +24,10 @@ const store = async (req: Request, res: Response): Promise<Response> => {
 
     return res.status(201).json(user);
   } catch (error) {
-    return res.status(400).send(error.message);
+    logger.error(error);
+    return res.status(error.statusCode).json({
+      error: error.message,
+    });
   }
 };
 
@@ -42,7 +47,10 @@ const index = async (req: Request, res: Response): Promise<Response> => {
 
     return res.status(200).json(usersWithoutPassword);
   } catch (error) {
-    return res.status(400).send(error.message);
+    logger.error(error);
+    return res.status(error.statusCode).json({
+      error: error.message,
+    });
   }
 };
 
@@ -52,7 +60,7 @@ const show = async (req: Request, res: Response): Promise<Response> => {
     const user = await UserRepository.findOneById(id);
 
     if (!user) {
-      throw new Error('Nenhum usuário encontrado');
+      throw AppError('Nenhum usuário encontrado');
     }
 
     const userWithoutPassword = {
@@ -65,7 +73,10 @@ const show = async (req: Request, res: Response): Promise<Response> => {
 
     return res.status(200).json(userWithoutPassword);
   } catch (error) {
-    return res.status(400).send(error.message);
+    logger.error(error);
+    return res.status(error.statusCode).json({
+      error: error.message,
+    });
   }
 };
 
@@ -84,12 +95,15 @@ const update = async (req: Request, res: Response): Promise<Response> => {
     const [updatedUser] = user;
 
     if (!updatedUser) {
-      throw new Error('Não existe usuário com esse id');
+      throw AppError('Não existe usuário com esse id');
     }
 
     return res.status(201).json(user);
   } catch (error) {
-    return res.status(400).send(error.message);
+    logger.error(error);
+    return res.status(error.statusCode).json({
+      error: error.message,
+    });
   }
 };
 
@@ -100,12 +114,15 @@ const destroy = async (req: Request, res: Response): Promise<Response> => {
     const user = await UserRepository.destroy(id);
 
     if (!user) {
-      throw new Error('Não existe usuário com esse id');
+      throw AppError('Não existe usuário com esse id');
     }
 
     return res.status(201).json(user);
   } catch (error) {
-    return res.status(400).send(error.message);
+    logger.error(error);
+    return res.status(error.statusCode).json({
+      error: error.message,
+    });
   }
 };
 

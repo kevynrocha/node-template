@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth';
+import AppError from 'src/errors/AppError';
+import logger from 'src/logger';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -17,7 +19,7 @@ const verifyAuthentication = (
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      throw new Error('JWT não foi enviado');
+      throw AppError('JWT não foi enviado', 401);
     }
 
     const [, token] = authHeader.split(' ');
@@ -25,18 +27,20 @@ const verifyAuthentication = (
     try {
       const decoded = verify(token, authConfig.jwt.secret);
 
-      const { sub } = decoded as TokenPayload;
+      const { sub } = decoded as ITokenPayload;
 
       req.user = {
         id: sub,
       };
-    } catch {
-      throw new Error('JWT com assinatura inválida');
+    } catch (error) {
+      logger.error(error);
+      throw AppError('JWT com assinatura inválida', 401);
     }
 
     return next();
   } catch (error) {
-    return res.status(400).send(error.message);
+    logger.error(error);
+    return res.status(error.statusCode).send(error.message);
   }
 };
 
