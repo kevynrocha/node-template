@@ -1,12 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
+import logger from 'src/logger';
 
-interface ErrorAttributes {
-  [err: string]: string;
-}
-
-// eslint-disable-next-line import/prefer-default-export
-export const validate = (
+const validate = (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -17,10 +13,17 @@ export const validate = (
     return next();
   }
 
-  const extractedErrors: ErrorAttributes[] = [];
-  errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }));
+  const extractedErrors: string[] = [];
+
+  errors
+    .array()
+    .map(error => extractedErrors.push(`${error.param}: ${error.msg}`));
+
+  logger.error(String(extractedErrors));
 
   return res.status(422).json({
     errors: extractedErrors,
   });
 };
+
+export default validate;
