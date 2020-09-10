@@ -1,7 +1,6 @@
-import User, { UserAttributes } from '@models/User';
-import connection from '../database/connection';
+import User, { IUserAttributes } from '@models/User';
 
-interface Request {
+interface IRequest {
   id?: string;
   name: string;
   email: string;
@@ -12,29 +11,17 @@ const create = async ({
   name,
   email,
   password,
-}: Request): Promise<UserAttributes> => {
-  const t = await connection.transaction();
-
-  try {
-    const user = await User.create(
-      { name, email, password },
-      { transaction: t },
-    );
-
-    await t.commit();
-    return user;
-  } catch (error) {
-    await t.rollback();
-    return error.message;
-  }
+}: IRequest): Promise<IUserAttributes> => {
+  const user = await User.create({ name, email, password });
+  return user;
 };
 
-const findAll = async (): Promise<UserAttributes[]> => {
+const findAll = async (): Promise<IUserAttributes[]> => {
   const users = await User.findAll();
   return users;
 };
 
-const findOneById = async (id: string): Promise<UserAttributes | null> => {
+const findOneById = async (id: string): Promise<IUserAttributes | null> => {
   const user = await User.findOne({
     where: {
       id,
@@ -45,7 +32,7 @@ const findOneById = async (id: string): Promise<UserAttributes | null> => {
 
 const findOneByEmail = async (
   email: string,
-): Promise<UserAttributes | null> => {
+): Promise<IUserAttributes | null> => {
   const user = await User.findOne({
     where: {
       email,
@@ -59,38 +46,21 @@ const update = async ({
   name,
   email,
   password,
-}: Request): Promise<Array<number | UserAttributes[]>> => {
-  const t = await connection.transaction();
-
-  try {
-    const user = await User.update(
-      { name, email, password },
-      { where: { id }, transaction: t },
-    );
-    await t.commit();
-    return user;
-  } catch (error) {
-    await t.rollback();
-    return error.message;
-  }
+}: IRequest): Promise<Array<number | IUserAttributes[]>> => {
+  const user = await User.update(
+    { name, email, password },
+    { where: { id }, transaction: t },
+  );
+  return user;
 };
 
 const destroy = async (id: string): Promise<number> => {
-  const t = await connection.transaction();
-
-  try {
-    const user = await User.destroy({
-      where: {
-        id,
-      },
-      transaction: t,
-    });
-    await t.commit();
-    return user;
-  } catch (error) {
-    await t.rollback();
-    return error.message;
-  }
+  const user = await User.destroy({
+    where: {
+      id,
+    },
+  });
+  return user;
 };
 
 export default {
