@@ -1,6 +1,6 @@
 import { Router } from 'express';
 // import verifyAuthentication from '../middlewares/verifyAuthentication';
-import UserController from '@controllers/UserController';
+import UserController from '@controllers/User/UserController';
 import validate from '../middlewares/handleRequestErrors';
 import {
   showAndUpdateValidationRules,
