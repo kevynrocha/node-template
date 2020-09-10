@@ -2,7 +2,7 @@ import { body, param, check } from 'express-validator';
 
 export const storeValidationRules = [
   body(['name', 'email', 'password'], 'Required').notEmpty(),
-  check('email').isEmail(),
+  body('email', 'Invalid e-mail').isEmail(),
 ];
 
 export const showAndUpdateValidationRules = [
