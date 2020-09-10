@@ -1,7 +1,7 @@
 import { DataTypes, UUIDV4, Model, Optional } from 'sequelize';
 import connection from '../database/connection';
 
-export interface UserAttributes {
+export interface IUserAttributes {
   id: number;
   name: string;
   email: string;
@@ -10,11 +10,11 @@ export interface UserAttributes {
   updated_at?: Date;
 }
 
-type UserCreationAttributes = Optional<UserAttributes, 'id'>;
+type UserCreationAttributes = Optional<IUserAttributes, 'id'>;
 
 interface UserInstance
-  extends Model<UserAttributes, UserCreationAttributes>,
-    UserAttributes {}
+  extends Model<IUserAttributes, UserCreationAttributes>,
+    IUserAttributes {}
 
 const UserModel = connection.define<UserInstance>('users', {
   id: {
