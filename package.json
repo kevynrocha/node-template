@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/server.ts",
+    "dev:test": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules src/server.ts & set NODE_ENV=test",
     "test": "jest"
   },
   "license": "MIT",
