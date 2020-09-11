@@ -15,7 +15,7 @@ Este projeto está sendo desenvolvido com as seguintes tecnologias:
 
 ### :muscle: Projeto
 
-<b>Stock Control</b> é um pojeto sem prazo de finalização, onde quero evoluí-lo constantemente com novos conhecimentos.
+<b>Stock Control</b> é um projeto sem prazo de finalização, onde quero evoluí-lo constantemente com novos conhecimentos.
 
 ---
 
