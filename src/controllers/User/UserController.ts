@@ -1,27 +1,13 @@
 import { Request, Response } from 'express';
-import { hash } from 'bcryptjs';
 import UserRepository from '@repositories/UserRepository';
-import AppError from 'src/errors/AppError';
-import logger from 'src/logger';
+import AppError from '@src/errors/AppError';
+import logger from '@src/logger';
+import CreateUserService from '@services/User/CreateUserService';
 
 const store = async (req: Request, res: Response): Promise<Response> => {
-  const { name, email, password } = req.body;
-
   try {
-    const checkUserExists = await UserRepository.findOneByEmail(email);
-
-    if (checkUserExists) {
-      throw AppError('Email já existe', 401);
-    }
-
-    const hashedPassword = await hash(password, 8);
-
-    const user = await UserRepository.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
+    const { name, email, password } = req.body;
+    const user = await CreateUserService({ name, email, password });
     return res.status(201).json(user);
   } catch (error) {
     logger.error(error);
@@ -56,8 +42,9 @@ const index = async (req: Request, res: Response): Promise<Response> => {
 
 const show = async (req: Request, res: Response): Promise<Response> => {
   const { id } = req.params;
+
   try {
-    const user = await UserRepository.findOneById(id);
+    const user = await UserRepository.findOneById(Number(id));
 
     if (!user) {
       throw AppError('Nenhum usuário encontrado');

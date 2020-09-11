@@ -2,7 +2,7 @@ import { DataTypes, UUIDV4, Model, Optional } from 'sequelize';
 import connection from '../database/connection';
 
 export interface IUserAttributes {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   password: string;

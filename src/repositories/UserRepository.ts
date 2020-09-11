@@ -21,7 +21,7 @@ const findAll = async (): Promise<IUserAttributes[]> => {
   return users;
 };
 
-const findOneById = async (id: string): Promise<IUserAttributes | null> => {
+const findOneById = async (id: number): Promise<IUserAttributes | null> => {
   const user = await User.findOne({
     where: {
       id,
@@ -47,10 +47,7 @@ const update = async ({
   email,
   password,
 }: IRequest): Promise<Array<number | IUserAttributes[]>> => {
-  const user = await User.update(
-    { name, email, password },
-    { where: { id }, transaction: t },
-  );
+  const user = await User.update({ name, email, password }, { where: { id } });
   return user;
 };
 
