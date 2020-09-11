@@ -3,8 +3,8 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import UserRepository from '@repositories/UserRepository';
 import authConfig from '@config/auth';
-import AppError from 'src/errors/AppError';
-import logger from 'src/logger';
+import AppError from '@src/errors/AppError';
+import logger from '@src/logger';
 
 const store = async (req: Request, res: Response): Promise<Response> => {
   const { email, password } = req.body;
