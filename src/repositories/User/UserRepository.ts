@@ -11,13 +11,15 @@ const create = async ({
   name,
   email,
   password,
-}: IRequest): Promise<IUserAttributes> => {
-  const user = await User.create({ name, email, password });
+}: IRequest): Promise<IUserAttributes | undefined> => {
+  const user = await User.create({ name, email, password }, { logging: false });
   return user;
 };
 
 const findAll = async (): Promise<IUserAttributes[]> => {
-  const users = await User.findAll();
+  const users = await User.findAll({
+    logging: false,
+  });
   return users;
 };
 
@@ -26,6 +28,7 @@ const findOneById = async (id: number): Promise<IUserAttributes | null> => {
     where: {
       id,
     },
+    logging: false,
   });
   return user;
 };
@@ -37,6 +40,7 @@ const findOneByEmail = async (
     where: {
       email,
     },
+    logging: false,
   });
   return user;
 };
@@ -47,7 +51,10 @@ const update = async ({
   email,
   password,
 }: IRequest): Promise<Array<number | IUserAttributes[]>> => {
-  const user = await User.update({ name, email, password }, { where: { id } });
+  const user = await User.update(
+    { name, email, password },
+    { where: { id }, logging: false },
+  );
   return user;
 };
 
@@ -56,6 +63,7 @@ const destroy = async (id: string): Promise<number> => {
     where: {
       id,
     },
+    logging: false,
   });
   return user;
 };
