@@ -1,4 +1,4 @@
-import UserRepository from '@repositories/UserRepository';
+import UserRepository from '@repositories/User/UserRepository';
 import { IUserAttributes } from '@models/User';
 import AppError from '@src/errors/AppError';
 import { hash } from 'bcryptjs';
@@ -13,7 +13,7 @@ const CreateUserService = async ({
   name,
   email,
   password,
-}: IRequest): Promise<IUserAttributes> => {
+}: IRequest): Promise<IUserAttributes | undefined> => {
   const checkUserExists = await UserRepository.findOneByEmail(email);
 
   if (checkUserExists) {

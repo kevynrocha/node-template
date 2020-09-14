@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import UserRepository from '@repositories/UserRepository';
+import UserRepository from '@repositories/User/UserRepository';
 import authConfig from '@config/auth';
 import AppError from '@src/errors/AppError';
 import logger from '@src/logger';

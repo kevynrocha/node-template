@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import UserRepository from '@repositories/UserRepository';
+import UserRepository from '@repositories/User/UserRepository';
 import AppError from '@src/errors/AppError';
 import logger from '@src/logger';
 import CreateUserService from '@services/User/CreateUserService';
