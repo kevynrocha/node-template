@@ -5,11 +5,11 @@ import User from '@src/models/User';
 import CreateUserService from './CreateUserService';
 
 beforeEach(async () => {
-  await User.destroy({ truncate: true });
+  await User.destroy({ truncate: true, logging: false });
 });
 
 afterAll(async () => {
-  await User.destroy({ truncate: true });
+  await User.destroy({ truncate: true, logging: false });
   await connection.close();
 });
 
