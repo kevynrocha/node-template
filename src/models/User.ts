@@ -16,7 +16,7 @@ interface UserInstance
   extends Model<IUserAttributes, UserCreationAttributes>,
     IUserAttributes {}
 
-const UserModel = connection.define<UserInstance>('users', {
+const User = connection.define<UserInstance>('users', {
   id: {
     primaryKey: true,
     type: DataTypes.UUID,
@@ -38,4 +38,4 @@ const UserModel = connection.define<UserInstance>('users', {
   },
 });
 
-export default UserModel;
+export default User;
